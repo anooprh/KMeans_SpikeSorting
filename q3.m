@@ -1,9 +1,15 @@
 load ps5_data.mat
 
+
+mean_vectors = InitThreeClusters_2;
+
 SAMPLE_LENGTH = 31;
 PREV_SAMPLES = 10;
-
 AFTER_SAMPLES = SAMPLE_LENGTH - PREV_SAMPLES - 1;
+
+NUM_OF_CLUSTERS = size(mean_vectors, 2);
+DIMENSIONALITY = size(mean_vectors, 1);
+NUM_OF_POINTS = size(snippets, 2);
 
 x = RealWaveform;
 f_0 = 30000; % sampling rate of waveform (Hz)
@@ -35,12 +41,6 @@ for i=1:size(above_th_locs,1)
     plot(snippets(:,i));
     hold on
 end
-
-mean_vectors = InitTwoClusters_1;
-
-NUM_OF_CLUSTERS = size(mean_vectors, 2);
-DIMENSIONALITY = size(mean_vectors, 1);
-NUM_OF_POINTS = size(snippets, 2);
 
 r = zeros(NUM_OF_CLUSTERS, NUM_OF_POINTS);
 
@@ -88,3 +88,17 @@ end
 
 subplot(3,1,3);
 plot(J);
+
+figure;
+for i=1:size(above_th_locs,1)
+    subplot(NUM_OF_CLUSTERS, 1, find(r(:,i)))
+    plot(snippets(:,i));
+    hold on
+end
+for i=1:NUM_OF_CLUSTERS
+    subplot(NUM_OF_CLUSTERS, 1, i);
+    plot(mean_vectors(:,i), 'r*');
+    hold on
+    plot(V_th(1:SAMPLE_LENGTH),'k');
+    hold on
+end
