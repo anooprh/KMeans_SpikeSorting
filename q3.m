@@ -1,9 +1,19 @@
 load ps5_data.mat
 
+% Same code used for question 3 - 5 . Generated the results by changing
+% just the initial data set
+
+%  For Problem 3
 % mean_vectors = InitTwoClusters_1;
-mean_vectors = InitTwoClusters_2;
+
+% For Problem 4
+% mean_vectors = InitTwoClusters_2;
+
+% For Problem 5a
 % mean_vectors = InitThreeClusters_1;
-% mean_vectors = InitThreeClusters_2;
+
+% For Problem 5b
+mean_vectors = InitThreeClusters_2;
 
 SAMPLE_LENGTH = 31;
 PREV_SAMPLES = 10;
@@ -53,7 +63,13 @@ iter_count = 0;
 while(1)
     iter_count = iter_count + 1;
     % E Step
-    dist = pdist2(mean_vectors', snippets');
+    dist = zeros(NUM_OF_CLUSTERS, NUM_OF_POINTS);
+    for i=1:NUM_OF_CLUSTERS
+        for j=1:NUM_OF_POINTS
+            dist(i, j) = sum(abs(mean_vectors(:,i) - snippets(:, j)));
+        end
+    end
+%     dist = pdist2(mean_vectors', snippets');
     for j=1:NUM_OF_CLUSTERS
         r(j, :) = dist(j, :) == min(dist);
     end
@@ -74,7 +90,8 @@ while(1)
     J_iter = 0;
     for i=1:NUM_OF_POINTS
         for j=1:NUM_OF_CLUSTERS
-            J_iter = J_iter + norm(snippets(:,i) - mean_vectors(:,j)) .* r(j, i);
+%             J_iter = J_iter + norm(snippets(:,i) - mean_vectors(:,j)) .* r(j, i);
+            J_iter = J_iter + sum(abs(mean_vectors(:,j) - snippets(:, i))) .* r(j, i);
         end
     end
     J = [J;J_iter];

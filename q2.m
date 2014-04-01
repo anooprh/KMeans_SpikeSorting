@@ -19,7 +19,7 @@ subplot(2,1,1);
 plot(x_filtered);
 hold on
 V_th  = ones(size(x_filtered,1),1).*250;
-plot(V_th,'k');
+plot(V_th,'r');
 
 x_filtered_shifted = [0; x_filtered(1:size(x_filtered, 1) -1)];
 above_th_locs = find((x_filtered > V_th) & (x_filtered_shifted < V_th));
@@ -29,9 +29,9 @@ for i=1:size(above_th_locs,1)
 end
 save snippets.mat snippets
 subplot(2,1,2);
-plot(V_th(1:SAMPLE_LENGTH),'k');
-hold on
 for i=1:size(above_th_locs,1)
     plot(snippets(:,i));
     hold on
 end
+plot(V_th(1:SAMPLE_LENGTH),'r');
+hold on
