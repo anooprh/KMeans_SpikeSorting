@@ -17,6 +17,9 @@ x_filtered = real(fftshift(ifft(fft(x.*fftshift(desired_response)))));
 
 subplot(2,1,1);
 plot(x_filtered);
+xlabel('Time');
+ylabel('Voltage');
+title('Thresholding');
 hold on
 V_th  = ones(size(x_filtered,1),1).*250;
 plot(V_th,'r');
@@ -35,3 +38,6 @@ for i=1:size(above_th_locs,1)
 end
 plot(V_th(1:SAMPLE_LENGTH),'r');
 hold on
+xlabel('Time');
+ylabel('Above Th Voltage');
+title('Spike Shape');

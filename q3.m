@@ -37,6 +37,10 @@ plot(x_filtered);
 hold on
 V_th  = ones(size(x_filtered,1),1).*250;
 plot(V_th,'k');
+xlabel('Time');
+ylabel('Voltage');
+title('Spike Train');
+legend('Actual Spikes', 'Threshold voltage');
 
 x_filtered_shifted = [0; x_filtered(1:size(x_filtered, 1) -1)];
 above_th_locs = find((x_filtered > V_th) & (x_filtered_shifted < V_th));
@@ -46,12 +50,15 @@ for i=1:size(above_th_locs,1)
 end
 save snippets.mat snippets
 subplot(3,1,2);
-plot(V_th(1:SAMPLE_LENGTH),'k');
-hold on
 for i=1:size(above_th_locs,1)
     plot(snippets(:,i));
     hold on
 end
+plot(V_th(1:SAMPLE_LENGTH),'k');
+hold on
+xlabel('Time');
+ylabel('Voltage');
+title('Spike Shape');
 
 NUM_OF_POINTS = size(snippets, 2);
 
@@ -110,6 +117,9 @@ end
 
 subplot(3,1,3);
 plot(J);
+xlabel('Iterations');
+ylabel('Objective Function');
+title('Objective Function');
 
 figure;
 for i=1:size(above_th_locs,1)
@@ -121,6 +131,12 @@ for i=1:NUM_OF_CLUSTERS
     subplot(NUM_OF_CLUSTERS, 1, i);
     plot(mean_vectors(:,i), 'r*');
     hold on
+    xlabel('Time');
+    ylabel('Voltage');
+    title('Spike Shape');
     plot(V_th(1:SAMPLE_LENGTH),'k');
     hold on
+    xlabel('Time');
+    ylabel('Voltage');
+    title('Spike Shape');
 end
